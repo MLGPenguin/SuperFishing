@@ -1,0 +1,27 @@
+author: PenguinMan
+description: "Custom Fishing plugin"
+main: me.Penguin.SuperFishing.Main
+name: SuperFishing
+version: 1.0.0
+depend: []
+api-version: 1.16
+
+commands:
+
+  fishing: 
+    usage: /<command> [givecrate]
+    description: "Base SuperFishing Command"
+    aliases: []
+
+
+
+permissions: 
+   
+  superfishing.givecrate:
+    default: op
+    description: "give crate and key permission"
+    
+#  a.a:
+ #   default: op
+  #  description: "a"
+    
