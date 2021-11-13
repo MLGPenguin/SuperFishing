@@ -4,14 +4,18 @@ public class Fish {
 	
 	private fishType type;
 	private Catch level;
+	private double chance;
 	
 	public enum Catch {
-		
 		// BASIC will not show up underneath the fish, others will show "GOOD CATCH"... ETC.
-		BASIC, GOOD, EXCELLENT, OUTSTANDING;
-
+		BASIC, 
+		GOOD, 
+		EXCELLENT, 
+		OUTSTANDING
+		;
+		
 	}
-
+	
 	public enum fishType {		
 		COD, 
 		SALMON, 
@@ -25,10 +29,15 @@ public class Fish {
 		SCUTE,
 		NAUTILUS_SHELL,
 		TURTLE_EGG
-		;
-		
+		;	
 	}
-
+	
+	
+	public Fish(fishType type, Catch tier) {
+		this.type = type;
+		this.level = tier;
+	}
+	
 	
 
 }
