@@ -16,7 +16,8 @@ public class Fish {
 		
 	}
 	
-	public enum fishType {		
+	public enum fishType {	
+		
 		COD, 
 		SALMON, 
 		PUFFERFISH, 
