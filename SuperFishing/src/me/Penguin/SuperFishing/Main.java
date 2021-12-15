@@ -1,14 +1,22 @@
 package me.Penguin.SuperFishing;
 
 
+import java.util.HashMap;
+
 import org.bukkit.plugin.java.JavaPlugin;
+
+import me.Penguin.SuperFishing.objects.Fish;
+import me.Penguin.SuperFishing.objects.Fish.FISH;
 
 public class Main extends JavaPlugin {
 	
-	// EXPORT WITH AUTIL
+	public static HashMap<Double, Fish> chances = new HashMap<>();
 	
 	@Override
 	public void onEnable() {
+	
+		for (FISH f : FISH.values()) chances.put(f.getFish().getChance(), f.getFish());
+		
 		
 		new MainListener(this);
 		new MainCmd(this);		

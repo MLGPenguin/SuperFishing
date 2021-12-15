@@ -1,5 +1,10 @@
 package me.Penguin.SuperFishing;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -16,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import me.Penguin.MainUtil.u;
 import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
+import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Key;
 
 public class MainListener implements Listener{
@@ -32,7 +38,7 @@ public class MainListener implements Listener{
 
 	@EventHandler
 	public void onFishing(PlayerFishEvent e) {
-		ItemStack test = new ItemStack(Material.DIAMOND);
+		ItemStack test = chooseRandomFish().getItem();
 		if (e.getState() == State.CAUGHT_FISH) {
 			Item caught = (Item) e.getCaught();
 			caught.setItemStack(test);
@@ -81,6 +87,19 @@ public class MainListener implements Listener{
 				}
 			}
 		}
+	}
+	
+	public Fish chooseRandomFish() {
+		HashMap<Double, Fish> chances = Main.chances;
+		List<Double> list = new ArrayList<Double>(chances.keySet());
+		double value = new Random().nextDouble();
+		int i = 0;
+		while (value > 0) {
+			value -= list.get(i);
+			i++;
+		}
+		return chances.get(list.get(i-1));
+		
 	}
 
 

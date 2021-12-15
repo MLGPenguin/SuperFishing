@@ -1,6 +1,10 @@
 package me.Penguin.SuperFishing.objects;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import me.Penguin.SuperFishing.utils.MiniItemBuilder;
+import me.Penguin.SuperFishing.utils.u;
 
 public class Fish {
 	
@@ -20,6 +24,9 @@ public class Fish {
 	public double getChance() { return chance; }
 	public Catch getCatchType() { return CatchType; }
 	public double getPrice() { return price; }
+	public ItemStack getItem() {
+		return new MiniItemBuilder(type).setName("&6&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " "))).build();
+	}
 	
 	public enum Catch {
 		// BASIC will not show up underneath the fish, others will show "GOOD CATCH"... ETC.
