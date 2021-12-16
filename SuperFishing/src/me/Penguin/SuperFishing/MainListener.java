@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +23,7 @@ import me.Penguin.MainUtil.u;
 import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
 import me.Penguin.SuperFishing.objects.Fish;
+import me.Penguin.SuperFishing.objects.Fish.Catch;
 import me.Penguin.SuperFishing.objects.Key;
 
 public class MainListener implements Listener{
@@ -37,11 +39,14 @@ public class MainListener implements Listener{
 	private void bc(String s) { Bukkit.getPlayer("MLGPenguin").sendMessage(u.hc(s)); }
 
 	@EventHandler
-	public void onFishing(PlayerFishEvent e) {
-		ItemStack test = chooseRandomFish().getItem();
+	public void onFishing(PlayerFishEvent e) {		
 		if (e.getState() == State.CAUGHT_FISH) {
+			Fish fish = chooseRandomFish();
+			ItemStack item = fish.getItem();
 			Item caught = (Item) e.getCaught();
-			caught.setItemStack(test);
+			caught.setItemStack(item);
+			Player p = e.getPlayer();
+			if (fish.getCatchType() == Catch.BASIC) p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 1);
 		}
 	}
 
@@ -94,7 +99,7 @@ public class MainListener implements Listener{
 		List<Double> list = new ArrayList<Double>(chances.keySet());
 		double value = new Random().nextDouble();
 		int i = 0;
-		while (value > 0) {
+		while (value > 0 && i < list.size()) {
 			value -= list.get(i);
 			i++;
 		}
