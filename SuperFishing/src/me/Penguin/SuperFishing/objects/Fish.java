@@ -25,15 +25,28 @@ public class Fish {
 	public Catch getCatchType() { return CatchType; }
 	public double getPrice() { return price; }
 	public ItemStack getItem() {
-		return new MiniItemBuilder(type).setName("&6&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " "))).build();
+		return new MiniItemBuilder(type)
+				.setName("&6&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " ")))
+				.addLores(
+						"&c" + CatchType.toString() + " &7Catch", 
+						"&7Value: &6$" + u.dc(price)						
+						)
+				.setLocname(type.toString().replaceAll("_", "").toLowerCase() + CatchType.getTier())
+				.build();
 	}
 	
 	public enum Catch {
-		// BASIC will not show up underneath the fish, others will show "GOOD CATCH"... ETC.
-		BASIC, 
-		RARE, 
-		EXOTIC, 
-		MYSTICAL;
+		BASIC(0), 
+		RARE(1), 
+		EXOTIC(2), 
+		MYSTICAL(3);
+		
+		int tier;
+		
+		Catch(int tier){
+			this.tier = tier;
+		}
+		public int getTier() { return tier; }
 }
 	
 	
@@ -65,12 +78,12 @@ public class Fish {
 		prismarineshard1(new Fish(Material.PRISMARINE_SHARD, 0.0041607, Catch.RARE, 37500)),
 		prismarineshard2(new Fish(Material.PRISMARINE_SHARD, 0.0008841, Catch.EXOTIC, 300000)),
 		prismarineshard3(new Fish(Material.PRISMARINE_SHARD, 0.0002184, Catch.MYSTICAL, 1500000)),
-		prismarinecrystal1(new Fish(Material.PRISMARINE_CRYSTALS, 0.0020803, Catch.RARE, 75000)),
-		prismarinecrystal2(new Fish(Material.PRISMARINE_CRYSTALS, 0.0004421, Catch.EXOTIC, 600000)),
-		prismarinecrystal3(new Fish(Material.PRISMARINE_CRYSTALS, 0.0001061, Catch.MYSTICAL, 3000000)),
-		inksack1(new Fish(Material.INK_SAC, 0.0014978, Catch.RARE, 112500)),
-		inksack2(new Fish(Material.INK_SAC, 0.0002925, Catch.EXOTIC, 900000)),
-		inksack3(new Fish(Material.INK_SAC, 0.0000737, Catch.MYSTICAL, 4500000)),
+		prismarinecrystals1(new Fish(Material.PRISMARINE_CRYSTALS, 0.0020803, Catch.RARE, 75000)),
+		prismarinecrystals2(new Fish(Material.PRISMARINE_CRYSTALS, 0.0004421, Catch.EXOTIC, 600000)),
+		prismarinecrystals3(new Fish(Material.PRISMARINE_CRYSTALS, 0.0001061, Catch.MYSTICAL, 3000000)),
+		inksac1(new Fish(Material.INK_SAC, 0.0014978, Catch.RARE, 112500)),
+		inksac2(new Fish(Material.INK_SAC, 0.0002925, Catch.EXOTIC, 900000)),
+		inksac3(new Fish(Material.INK_SAC, 0.0000737, Catch.MYSTICAL, 4500000)),
 		scute1(new Fish(Material.SCUTE, 0.0009362, Catch.RARE, 150000)),
 		scute2(new Fish(Material.SCUTE, 0.0001989, Catch.EXOTIC, 1200000)),
 		scute3(new Fish(Material.SCUTE, 0.0000468, Catch.MYSTICAL, 6000000)),

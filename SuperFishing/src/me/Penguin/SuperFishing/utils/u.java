@@ -1,5 +1,6 @@
 package me.Penguin.SuperFishing.utils;
 
+import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,6 +25,12 @@ public class u {
 	}
 	
 	public static String hc(String s) { if (s == null) return null; else return translateHexColorCodes(cc(s)); }
+	
+	public static String dc(double value) {
+		String pattern = "###,###,###.##";
+		DecimalFormat decimalFormat = new DecimalFormat(pattern);
+		return decimalFormat.format(value); 
+	}
 	
 	public static String cc(String s) { return ChatColor.translateAlternateColorCodes('&', s);	}	
 	
