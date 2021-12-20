@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,12 +15,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.Penguin.MainUtil.u;
+import me.Penguin.SuperFishing.GUIs.fishshop;
 import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
 import me.Penguin.SuperFishing.objects.Fish;
@@ -115,6 +119,21 @@ public class MainListener implements Listener{
 				}
 			}
 		}
+	}
+	
+	
+	@EventHandler
+	public void removeFromLists(InventoryCloseEvent e) {
+		Player p = (Player) e.getPlayer();
+		UUID uuid = p.getUniqueId();
+		if (fishshop.viewingFishShop.contains(uuid)) fishshop.viewingFishShop.remove(uuid);		
+	}
+	
+	@EventHandler
+	public void fishShopHandler(InventoryClickEvent e) {
+		Player p = (Player) e.getWhoClicked();
+		UUID uuid = p.getUniqueId();
+		if (fishshop.viewingFishShop.contains(uuid)) e.setCancelled(true);
 	}
 	
 	public Fish chooseRandomFish() {

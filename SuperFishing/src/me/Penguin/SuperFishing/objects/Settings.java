@@ -2,8 +2,8 @@ package me.Penguin.SuperFishing.objects;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
-import me.Penguin.MainUtil.u;
-import penguin.supertags.Main;
+import me.Penguin.SuperFishing.Main;
+import me.Penguin.SuperFishing.utils.u;
 
 public class Settings {
 

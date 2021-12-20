@@ -28,7 +28,7 @@ public class Fish {
 	public boolean isFish() { return isFish; }
 	public ItemStack getItem(boolean forShop) {		
 		MiniItemBuilder fish = new MiniItemBuilder(type)
-				.setName("&6&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " ")))				
+				.setName(CatchType.getColour() + "&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " ")))				
 				.setLocname(type.toString().replaceAll("_", "").toLowerCase() + CatchType.getTier());
 		if (forShop) {
 			return fish.addLores(
@@ -36,14 +36,15 @@ public class Fish {
 					"&7Sell Price: &a&n" + "$" + u.dc(price)).build();
 		} else {
 			return fish.addLores("",
-					"&7This fish can be sold to the Fish Merchant at spawn!", "",
-					"&7Catch Type: " + CatchType.getName()).build();
+					"&7Catch Type: " + CatchType.getName(), "",
+					"&7This fish can be sold to the ",
+					"&6Fish Merchant &7at spawn!").build();
 		}
 	}
 	
 	public enum Catch {
-		BASIC(0, "&c","BASIC"), 
-		RARE(1, "&3", "RARE"), 
+		BASIC(0, "&c","&cBASIC"), 
+		RARE(1, "&3", "&3RARE"), 
 		EXOTIC(2, "&d", "&5&ki&dEXOTIC&5&ki"), 
 		LEGENDARY(3, "&6", "&c&k8&6LEGENDARY&c&k8");
 		
@@ -52,6 +53,8 @@ public class Fish {
 		
 		Catch(int tier, String colour, String catchName) {
 			this.tier = tier;
+			this.colour = colour;
+			this.catchname = catchName;
 		}
 		public int getTier() { return tier; }
 		public String getColour() { return u.cc(colour); }

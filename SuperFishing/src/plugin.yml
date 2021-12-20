@@ -9,17 +9,21 @@ api-version: 1.16
 commands:
 
   fishing: 
-    usage: /<command> [givecrate]
+    usage: /<command> [givecrate, reload]
     description: "Base SuperFishing Command"
-    aliases: []
-
+    
+  fishingshop:
+    usage: /<command>
+    aliases: [fs]
+  
+  fishtest:
+    usage: /<command>
 
 
 permissions: 
    
   superfishing.givecrate:
     default: op
-    description: "give crate and key permission"
     
 #  a.a:
  #   default: op
