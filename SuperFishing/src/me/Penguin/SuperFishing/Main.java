@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Fish.FISH;
+import me.Penguin.SuperFishing.objects.Settings;
 
 public class Main extends JavaPlugin {
 	
@@ -21,8 +22,10 @@ public class Main extends JavaPlugin {
 		new MainListener(this);
 		new MainCmd(this);		
 		
-		//getConfig().options().copyDefaults();
-		//saveDefaultConfig();
+		getConfig().options().copyDefaults();
+		saveDefaultConfig();
+		
+		Settings.setup();
 		
 	}
 	
