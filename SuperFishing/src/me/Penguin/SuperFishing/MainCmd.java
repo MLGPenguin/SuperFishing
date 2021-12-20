@@ -12,8 +12,10 @@ import org.bukkit.inventory.ItemStack;
 import me.Penguin.MainUtil.command;
 import me.Penguin.MainUtil.command.ctype;
 import me.Penguin.MainUtil.u;
+import me.Penguin.SuperFishing.GUIs.fishshop;
 import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
+import me.Penguin.SuperFishing.objects.Settings;
 import me.Penguin.SuperFishing.utils.perm;
 
 public class MainCmd implements TabExecutor {
@@ -24,6 +26,8 @@ public class MainCmd implements TabExecutor {
 	public MainCmd(Main plugin) {
 		this.plugin = plugin;
 		plugin.getCommand("fishing").setExecutor(this);
+		plugin.getCommand("fishingshop").setExecutor(this);
+		plugin.getCommand("fishtest").setExecutor(this);
 	}
 
 
@@ -55,6 +59,22 @@ public class MainCmd implements TabExecutor {
 						}
 					}
 				}
+			} else if (cmd.equalsIgnoreCase("reload")) {
+				plugin.reloadConfig();
+				Settings.setup();
+				s.sendMessage("reloaded");
+				return true;
+			}
+		} else if (cmmnd.getName().equalsIgnoreCase("fishingshop")) {
+			fishshop.open((Player) s);
+			return true;
+		} else if (cmmnd.getName().equalsIgnoreCase("fishtest")) {
+			if (s.hasPermission(perm.givecrate.get())) {
+				try {
+					int amount = Integer.parseInt(args[0]);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return false;
@@ -63,7 +83,7 @@ public class MainCmd implements TabExecutor {
 	@Override
 	public List<String> onTabComplete( CommandSender s,  Command cmd, String label,  String[] args) {
 		if (cmd.getName().equalsIgnoreCase("fishing")) {
-			if (args.length == 1) return u.TabCompleter(args[0], "givecrate"); 
+			if (args.length == 1 && s.hasPermission(perm.givecrate.get())) return u.TabCompleter(args[0], "givecrate", "reload"); 
 			String bmd = args[0];
 			if (bmd.equalsIgnoreCase("givecrate")) {
 				if (s.hasPermission(perm.givecrate.get())) {
