@@ -42,11 +42,34 @@ public class MainListener implements Listener{
 	public void onFishing(PlayerFishEvent e) {		
 		if (e.getState() == State.CAUGHT_FISH) {
 			Fish fish = chooseRandomFish();
-			ItemStack item = fish.getItem();
+			ItemStack item = fish.getItem(false);
 			Item caught = (Item) e.getCaught();
 			caught.setItemStack(item);
 			Player p = e.getPlayer();
+			switch (fish.getCatchType()) {
+			case BASIC: 
+				p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 1);
+				break;
+			case RARE:
+				p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
+				p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1, 1);
+				break;
+			case EXOTIC:
+				p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
+				p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
+				break;
+			case LEGENDARY:
+				p.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 1, 1);
+				break;
+			default: break;
+				
+			}
 			if (fish.getCatchType() == Catch.BASIC) p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 1);
+			else if (fish.getCatchType() == Catch.RARE) {
+				
+			} else if (fish.getCatchType() == Catch.EXOTIC) {
+				
+			}
 		}
 	}
 
