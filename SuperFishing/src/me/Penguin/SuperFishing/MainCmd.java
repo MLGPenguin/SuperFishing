@@ -1,8 +1,14 @@
 package me.Penguin.SuperFishing;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -15,7 +21,10 @@ import me.Penguin.MainUtil.u;
 import me.Penguin.SuperFishing.GUIs.fishshop;
 import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
+import me.Penguin.SuperFishing.objects.Fish;
+import me.Penguin.SuperFishing.objects.Fish.FISH;
 import me.Penguin.SuperFishing.objects.Settings;
+import me.Penguin.SuperFishing.objects.valueList;
 import me.Penguin.SuperFishing.utils.perm;
 
 public class MainCmd implements TabExecutor {
@@ -70,11 +79,38 @@ public class MainCmd implements TabExecutor {
 			return true;
 		} else if (cmmnd.getName().equalsIgnoreCase("fishtest")) {
 			if (s.hasPermission(perm.givecrate.get())) {
-				try {
-					int amount = Integer.parseInt(args[0]);
-				} catch (NumberFormatException e) {
-					e.printStackTrace();
+				if (s instanceof Player) {
+					if (args.length == 1) {
+						try {
+							Player p = (Player) s;
+							int amount = Integer.parseInt(args[0]);
+							World w = p.getWorld();
+							Location l = p.getLocation();
+							valueList<FISH, Integer> map = new valueList<>();
+							Instant start = Instant.now();
+							for (int i = 0 ; i < amount ; i++) {
+								Fish fish = MainListener.chooseRandomFish();
+								map.addValue(FISH.valueOf(fish.getFISHname()), 1);
+							}
+							for (FISH f : map.keySet()) {
+								while(map.get(f) > 0) {
+									int stacksize = map.get(f) >= 64 ? 64 : map.get(f);
+									map.removeVal(f, stacksize, false);
+									ItemStack fs = f.getFish().getItem(false);
+									fs.setAmount(stacksize);
+									w.dropItem(l, fs);
+									p.playSound(l, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+								}
+							}
+							Instant end = Instant.now();
+							if (p.getName().equals("MLGPenguin")) p.sendMessage(Duration.between(start, end).toMillis() + "ms");
+						} catch (NumberFormatException e) {
+							return false;
+						}
+						return true;
+					}	
 				}
+							
 			}
 		}
 		return false;

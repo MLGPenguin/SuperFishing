@@ -1,6 +1,8 @@
 package me.Penguin.SuperFishing.GUIs;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -8,9 +10,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
+import me.Penguin.SuperFishing.objects.Fish;
+import me.Penguin.SuperFishing.objects.Fish.FISH;
 import me.Penguin.SuperFishing.objects.Settings;
 import me.Penguin.SuperFishing.utils.MiniItemBuilder;
+import me.Penguin.SuperFishing.utils.u;
 
 public class fishshop {
 	
@@ -19,13 +25,38 @@ public class fishshop {
 	public static void open(Player p) {
 		Inventory inv = Bukkit.createInventory(null, 54, Settings.FishingShopTitle);
 		
-		inv.setItem(0, new MiniItemBuilder(Material.FISHING_ROD).setName("&6&nFishing Rod")
-				.addLores("","&7This item can be used at the magical lake in &6&n/pvp","","&7Buy Price: &c&n$500").build());
+		List<Fish> fishes = getFishInInventory(p);
+		double totalPrice = getWorth(fishes);
+				
+		ItemStack sellall = new MiniItemBuilder(Material.GOLD_NUGGET).setName("&a&N&lSELL ALL").addLores("&7Total Price: &6$" + u.dc(totalPrice)).build();
+		inv.setItem(45, sellall);
+		inv.setItem(53, sellall);
 		
 		
 		p.openInventory(inv);
 		viewingFishShop.add(p.getUniqueId());
 		
 	}
+	
+	
+	private static List<Fish> getFishInInventory(Player p) {
+		List<Fish> fishes = new ArrayList<>();
+		for (ItemStack x : p.getInventory().getContents()) {
+			if (x != null && x.hasItemMeta() && x.getItemMeta().hasLocalizedName() && Fish.fishMaterials.contains(x.getType())) {
+				try {
+				fishes.add(FISH.valueOf(x.getItemMeta().getLocalizedName()).getFish().setAmount(x.getAmount()));
+				} catch (IllegalArgumentException e) {}
+			}
+		}
+		return fishes;
+	}
+	
+	private static double getWorth(List<Fish> fish) {
+		double total = 0;
+		for (Fish f : fish) total += (f.getPrice() * f.getAmount());
+		return total;
+	}
 
+	
+	
 }

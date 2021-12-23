@@ -136,7 +136,7 @@ public class MainListener implements Listener{
 		if (fishshop.viewingFishShop.contains(uuid)) e.setCancelled(true);
 	}
 	
-	public Fish chooseRandomFish() {
+	public static Fish chooseRandomFish() {
 		HashMap<Double, Fish> chances = Main.chances;
 		List<Double> list = new ArrayList<Double>(chances.keySet());
 		double value = new Random().nextDouble();
