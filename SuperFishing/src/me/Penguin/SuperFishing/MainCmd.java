@@ -96,7 +96,7 @@ public class MainCmd implements TabExecutor {
 								while(map.get(f) > 0) {
 									int stacksize = map.get(f) >= 64 ? 64 : map.get(f);
 									map.removeVal(f, stacksize, false);
-									ItemStack fs = f.getFish().getItem(false);
+									ItemStack fs = f.getFish().getItem(false, null);
 									fs.setAmount(stacksize);
 									w.dropItem(l, fs);
 									p.playSound(l, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);

@@ -37,13 +37,54 @@ public class fishshop {
 		ItemStack pane = new MiniItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName("&0").build();
 		for (int i : paneSlots) inv.setItem(i, pane);
 		
+		inv.setItem(0, FISH.cod0.getFish().getItem(true, p));
+		inv.setItem(9, FISH.cod1.getFish().getItem(true, p));
+		inv.setItem(18, FISH.cod2.getFish().getItem(true, p));
+		inv.setItem(27, FISH.cod3.getFish().getItem(true, p));
+		
+		inv.setItem(1, FISH.salmon0.getFish().getItem(true, p));
+		inv.setItem(10, FISH.salmon1.getFish().getItem(true, p));
+		inv.setItem(19, FISH.salmon2.getFish().getItem(true, p));
+		inv.setItem(28, FISH.salmon3.getFish().getItem(true, p));
+		
+		inv.setItem(2, FISH.pufferfish0.getFish().getItem(true, p));
+		inv.setItem(11, FISH.pufferfish1.getFish().getItem(true, p));
+		inv.setItem(20, FISH.pufferfish2.getFish().getItem(true, p));
+		inv.setItem(29, FISH.pufferfish3.getFish().getItem(true, p));
+		
+		inv.setItem(3, FISH.tropicalfish0.getFish().getItem(true, p));
+		inv.setItem(12, FISH.tropicalfish1.getFish().getItem(true, p));
+		inv.setItem(21, FISH.tropicalfish2.getFish().getItem(true, p));
+		inv.setItem(30, FISH.tropicalfish3.getFish().getItem(true, p));
+		
+		inv.setItem(13, FISH.prismarineshard1.getFish().getItem(true, p));
+		inv.setItem(22, FISH.prismarineshard2.getFish().getItem(true, p));
+		inv.setItem(31, FISH.prismarineshard3.getFish().getItem(true, p));
+		
+		inv.setItem(14, FISH.prismarinecrystals1.getFish().getItem(true, p));
+		inv.setItem(23, FISH.prismarinecrystals2.getFish().getItem(true, p));
+		inv.setItem(32, FISH.prismarinecrystals3.getFish().getItem(true, p));
+		
+		inv.setItem(15, FISH.inksac1.getFish().getItem(true, p));
+		inv.setItem(24, FISH.inksac2.getFish().getItem(true, p));
+		inv.setItem(33, FISH.inksac3.getFish().getItem(true, p));
+		
+		inv.setItem(16, FISH.scute1.getFish().getItem(true, p));
+		inv.setItem(25, FISH.scute2.getFish().getItem(true, p));
+		inv.setItem(34, FISH.scute3.getFish().getItem(true, p));
+		
+		inv.setItem(26, FISH.nautilusshell2.getFish().getItem(true, p));
+		inv.setItem(35, FISH.nautilusshell3.getFish().getItem(true, p));
+		
+		inv.setItem(49, FISH.turtleegg3.getFish().getItem(true, p));
+		
 		p.openInventory(inv);
 		viewingFishShop.add(p.getUniqueId());
 		
 	}
 	
 	
-	private static List<Fish> getFishInInventory(Player p) {
+	public static List<Fish> getFishInInventory(Player p) {
 		List<Fish> fishes = new ArrayList<>();
 		for (ItemStack x : p.getInventory().getContents()) {
 			if (x != null && x.hasItemMeta() && x.getItemMeta().hasLocalizedName() && Fish.fishMaterials.contains(x.getType())) {

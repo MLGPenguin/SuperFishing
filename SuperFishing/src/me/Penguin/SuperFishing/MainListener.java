@@ -46,8 +46,9 @@ public class MainListener implements Listener{
 	public void onFishing(PlayerFishEvent e) {		
 		if (e.getState() == State.CAUGHT_FISH) {
 			Fish fish = chooseRandomFish();
-			ItemStack item = fish.getItem(false);
+			ItemStack item = fish.getItem(false, null);
 			Item caught = (Item) e.getCaught();
+			item.setAmount(1);
 			caught.setItemStack(item);
 			Player p = e.getPlayer();
 			switch (fish.getCatchType()) {

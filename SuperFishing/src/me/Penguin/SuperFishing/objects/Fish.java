@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import me.Penguin.SuperFishing.utils.MiniItemBuilder;
@@ -34,14 +35,16 @@ public class Fish {
 	public double getPrice() { return price; }
 	public boolean isFish() { return isFish; }
 	public String getFISHname() { return FISHname; }
-	public ItemStack getItem(boolean forShop) {		
+	public ItemStack getItem(boolean forShop, Player p) {		
 		MiniItemBuilder fish = new MiniItemBuilder(type, amount)
 				.setName(CatchType.getColour() + "&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " ")))				
 				.setLocname(FISHname);
 		if (forShop) {
+			
 			return fish.addLores(
 					"&7Catch Type: " + CatchType.getName(), 
-					"&7Sell Price: &a&n" + "$" + u.dc(price)).build();
+					"&7Sell Price: &a&n" + "$" + u.dc(price), "",
+					"&7You have: ").build();
 		} else {
 			return fish.addLores("",
 					"&7Catch Type: " + CatchType.getName(), "",
@@ -113,7 +116,7 @@ public class Fish {
 			this.fish = fish;
 		}
 		
-	public Fish getFish() { return fish; }
+	public Fish getFish() { return fish.setAmount(1); }
 	
 	}
 	
