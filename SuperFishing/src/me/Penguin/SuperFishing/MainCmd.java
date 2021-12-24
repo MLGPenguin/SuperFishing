@@ -5,7 +5,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -96,7 +95,7 @@ public class MainCmd implements TabExecutor {
 								while(map.get(f) > 0) {
 									int stacksize = map.get(f) >= 64 ? 64 : map.get(f);
 									map.removeVal(f, stacksize, false);
-									ItemStack fs = f.getFish().getItem(false, null);
+									ItemStack fs = f.getFish().getItem(false, null, 0);
 									fs.setAmount(stacksize);
 									w.dropItem(l, fs);
 									p.playSound(l, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);

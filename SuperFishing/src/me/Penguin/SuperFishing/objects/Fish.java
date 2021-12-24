@@ -17,8 +17,6 @@ public class Fish {
 	private Catch CatchType;
 	private boolean isFish;
 	private String FISHname;
-	// for Item: 
-	private int amount = 1;
 	
 	public Fish(Material type, double chance, Catch Catch, double price, boolean isFish) {
 		this.type = type;
@@ -35,16 +33,15 @@ public class Fish {
 	public double getPrice() { return price; }
 	public boolean isFish() { return isFish; }
 	public String getFISHname() { return FISHname; }
-	public ItemStack getItem(boolean forShop, Player p) {		
-		MiniItemBuilder fish = new MiniItemBuilder(type, amount)
+	public ItemStack getItem(boolean forShop, Player p, int amountInInventory) {		
+		MiniItemBuilder fish = new MiniItemBuilder(type)
 				.setName(CatchType.getColour() + "&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " ")))				
 				.setLocname(FISHname);
-		if (forShop) {
-			
+		if (forShop) {			
 			return fish.addLores(
 					"&7Catch Type: " + CatchType.getName(), 
 					"&7Sell Price: &a&n" + "$" + u.dc(price), "",
-					"&7You have: ").build();
+					"&7You have: " + u.dc(amountInInventory)).build();
 		} else {
 			return fish.addLores("",
 					"&7Catch Type: " + CatchType.getName(), "",
@@ -52,9 +49,6 @@ public class Fish {
 					"&6Fish Merchant &7at spawn!").build();
 		}
 	}
-	
-	public Fish setAmount(int amount) { this.amount = amount; return this; }
-	public int getAmount() { return amount; }
 	
 	public enum Catch {
 		BASIC(0, "&c","&cBASIC"), 
@@ -116,7 +110,7 @@ public class Fish {
 			this.fish = fish;
 		}
 		
-	public Fish getFish() { return fish.setAmount(1); }
+	public Fish getFish() { return fish; }
 	
 	}
 	

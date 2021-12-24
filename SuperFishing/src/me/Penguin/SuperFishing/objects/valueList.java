@@ -29,7 +29,7 @@ public class valueList<T, K> {
 	
 	
 	public int get(T key) {
-		return map.containsKey(key) ? map.get(key) : null;
+		return map.containsKey(key) ? map.get(key) : 0;
 	}
 	
 	public Set<T> keySet() { 
