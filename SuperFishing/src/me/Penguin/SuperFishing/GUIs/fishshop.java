@@ -22,11 +22,13 @@ public class fishshop {
 	private Player p;
 	private valueList<FISH, Integer> fishes; 
 	private double totalPrice;
+	private int totalFish;
 	
 	public fishshop(Player p) {
 		this.p = p;
 		this.fishes = getFishInInventory(p);
 		this.totalPrice = getWorth(fishes);
+		this.totalFish = getTotalFish();
 	}
 	
 	public static List<Integer> paneSlots = Arrays.asList(4, 5, 6, 7, 8, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 50, 51, 52);
@@ -107,8 +109,16 @@ public class fishshop {
 		return total;
 	}
 
+	private int getTotalFish() {
+		int total = 0;
+		for (FISH f : fishes.keySet()) total += fishes.get(f);
+		return total;
+	}
+	
 	public valueList<FISH, Integer> getFish() { return fishes; }
 	public double getWorth() { return totalPrice; }
+	public int getTotalFishCount() { return totalFish; }
+	public Player getPlayer() { return p; }
 	
 	
 }

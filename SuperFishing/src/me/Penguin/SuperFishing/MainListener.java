@@ -2,8 +2,10 @@ package me.Penguin.SuperFishing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -29,6 +31,7 @@ import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
 import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Fish.Catch;
+import me.Penguin.SuperFishing.objects.Fish.FISH;
 import me.Penguin.SuperFishing.objects.Key;
 import net.milkbowl.vault.economy.Economy;
 
@@ -37,6 +40,7 @@ public class MainListener implements Listener{
 	private Main plugin;
 	private Economy eco;
 	public static HashMap<UUID, fishshop> viewingFishShop = new HashMap<>();
+	public static HashMap<UUID, confirmSell> confirming = new HashMap<>();
 
 	public MainListener(Main plugin) {
 		this.plugin = plugin;
@@ -133,7 +137,7 @@ public class MainListener implements Listener{
 		Player p = (Player) e.getPlayer();
 		UUID uuid = p.getUniqueId();
 		if (viewingFishShop.containsKey(uuid)) viewingFishShop.remove(uuid);		
-		if (confirmSell.confirming.contains(uuid)) confirmSell.confirming.remove(uuid);
+		if (confirming.containsKey(uuid)) confirming.remove(uuid);
 	}
 	
 	@EventHandler
@@ -149,12 +153,21 @@ public class MainListener implements Listener{
 					ItemStack clicked = e.getCurrentItem();
 					String locname = clicked.getItemMeta().getLocalizedName();
 					if (locname.equals("sellall")) {
-						 confirmSell.open(p, true, null, 0, f.getWorth());
+						new confirmSell(f).open(true, null);
+					} else {
+						new confirmSell(f).open(false, FISH.valueOf(locname));
 					}
 				}
 			}
 		}
-		if (confirmSell.confirming.contains(uuid)) e.setCancelled(true);
+		if (confirming.containsKey(uuid)) {
+			if (e.getClickedInventory() == e.getView().getTopInventory()) {
+				if (confirmSell.cancels.contains(slot)) {
+					new fishshop(p).open();
+				}
+			}
+			e.setCancelled(true);
+		}
 	}
 	
 	public static Fish chooseRandomFish() {
