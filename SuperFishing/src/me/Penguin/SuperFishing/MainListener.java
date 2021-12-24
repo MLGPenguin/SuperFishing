@@ -23,20 +23,25 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.Penguin.MainUtil.u;
+import me.Penguin.SuperFishing.GUIs.confirmSell;
 import me.Penguin.SuperFishing.GUIs.fishshop;
 import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
 import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Fish.Catch;
 import me.Penguin.SuperFishing.objects.Key;
+import net.milkbowl.vault.economy.Economy;
 
 public class MainListener implements Listener{
 
 	private Main plugin;
+	private Economy eco;
+	public static HashMap<UUID, fishshop> viewingFishShop = new HashMap<>();
 
 	public MainListener(Main plugin) {
 		this.plugin = plugin;
-		Bukkit.getPluginManager().registerEvents(this, plugin);
+		this.eco = plugin.eco;
+		Bukkit.getPluginManager().registerEvents(this, plugin);		
 	}
 
 
@@ -127,14 +132,29 @@ public class MainListener implements Listener{
 	public void removeFromLists(InventoryCloseEvent e) {
 		Player p = (Player) e.getPlayer();
 		UUID uuid = p.getUniqueId();
-		if (fishshop.viewingFishShop.contains(uuid)) fishshop.viewingFishShop.remove(uuid);		
+		if (viewingFishShop.containsKey(uuid)) viewingFishShop.remove(uuid);		
+		if (confirmSell.confirming.contains(uuid)) confirmSell.confirming.remove(uuid);
 	}
 	
 	@EventHandler
 	public void fishShopHandler(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
 		UUID uuid = p.getUniqueId();
-		if (fishshop.viewingFishShop.contains(uuid)) e.setCancelled(true);
+		int slot = e.getSlot();
+		if (viewingFishShop.containsKey(uuid)) {
+			e.setCancelled(true);
+			if (e.getClickedInventory() == e.getView().getTopInventory()) {
+				if (!fishshop.paneSlots.contains(slot)) {
+					fishshop f = viewingFishShop.get(uuid);
+					ItemStack clicked = e.getCurrentItem();
+					String locname = clicked.getItemMeta().getLocalizedName();
+					if (locname.equals("sellall")) {
+						 confirmSell.open(p, true, null, 0, f.getWorth());
+					}
+				}
+			}
+		}
+		if (confirmSell.confirming.contains(uuid)) e.setCancelled(true);
 	}
 	
 	public static Fish chooseRandomFish() {

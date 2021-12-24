@@ -3,7 +3,7 @@ description: "Custom Fishing plugin"
 main: me.Penguin.SuperFishing.Main
 name: SuperFishing
 version: 1.0.0
-depend: []
+depend: [Vault]
 api-version: 1.16
 
 commands:

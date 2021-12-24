@@ -1,10 +1,7 @@
 package me.Penguin.SuperFishing.GUIs;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import me.Penguin.SuperFishing.MainListener;
 import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Fish.FISH;
 import me.Penguin.SuperFishing.objects.Settings;
@@ -21,16 +19,21 @@ import me.Penguin.SuperFishing.utils.u;
 
 public class fishshop {
 	
-	public static Set<UUID> viewingFishShop = new HashSet<>();
-	private static List<Integer> paneSlots = Arrays.asList(4, 5, 6, 7, 8, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 50, 51, 52);
+	private Player p;
+	private valueList<FISH, Integer> fishes; 
+	private double totalPrice;
 	
-	public static void open(Player p) {
-		Inventory inv = Bukkit.createInventory(null, 54, Settings.FishingShopTitle);
-		
-		valueList<FISH, Integer> fishes = getFishInInventory(p);
-		double totalPrice = getWorth(fishes);
-				
-		ItemStack sellall = new MiniItemBuilder(Material.GOLD_NUGGET).setName("&a&N&lSELL ALL").addLores("&7Total Price: &6$" + u.dc(totalPrice)).build();
+	public fishshop(Player p) {
+		this.p = p;
+		this.fishes = getFishInInventory(p);
+		this.totalPrice = getWorth(fishes);
+	}
+	
+	public static List<Integer> paneSlots = Arrays.asList(4, 5, 6, 7, 8, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 50, 51, 52);
+	
+	public void open() {
+		Inventory inv = Bukkit.createInventory(null, 54, Settings.FishingShopTitle);				
+		ItemStack sellall = new MiniItemBuilder(Material.GOLD_NUGGET).setName("&a&N&lSELL ALL").setLocname("sellall").addLores("&7Total Price: &6$" + u.dc(totalPrice)).build();
 		inv.setItem(45, sellall);
 		inv.setItem(53, sellall);
 		
@@ -79,12 +82,12 @@ public class fishshop {
 		inv.setItem(49, FISH.turtleegg3.getFish().getItem(true, p, fishes.get(FISH.turtleegg3)));
 		
 		p.openInventory(inv);
-		viewingFishShop.add(p.getUniqueId());
+		MainListener.viewingFishShop.put(p.getUniqueId(), this);
 		
 	}
 	
 	
-	public static valueList<FISH, Integer> getFishInInventory(Player p) {
+	private valueList<FISH, Integer> getFishInInventory(Player p) {
 		valueList<FISH, Integer> fishes = new valueList<>();
 		for (ItemStack x : p.getInventory().getContents()) {
 			if (x != null && x.hasItemMeta() && x.getItemMeta().hasLocalizedName() && Fish.fishMaterials.contains(x.getType())) {
@@ -95,14 +98,17 @@ public class fishshop {
 			}
 		}
 		return fishes;
-	}
+	}	
+
 	
-	private static double getWorth(valueList<FISH, Integer> fish) {
+	private double getWorth(valueList<FISH, Integer> fish) {
 		double total = 0;
 		for (FISH f : fish.keySet()) total += (f.getFish().getPrice() * fish.get(f));
 		return total;
 	}
 
+	public valueList<FISH, Integer> getFish() { return fishes; }
+	public double getWorth() { return totalPrice; }
 	
 	
 }

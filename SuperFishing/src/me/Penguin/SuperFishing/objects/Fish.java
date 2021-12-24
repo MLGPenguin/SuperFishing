@@ -33,9 +33,10 @@ public class Fish {
 	public double getPrice() { return price; }
 	public boolean isFish() { return isFish; }
 	public String getFISHname() { return FISHname; }
+	public String getName() { return CatchType.getColour() + "&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " ")); }
 	public ItemStack getItem(boolean forShop, Player p, int amountInInventory) {		
 		MiniItemBuilder fish = new MiniItemBuilder(type)
-				.setName(CatchType.getColour() + "&n" + u.capitaliseFirstLetters(type.toString().replaceAll("_", " ")))				
+				.setName(getName())				
 				.setLocname(FISHname);
 		if (forShop) {			
 			return fish.addLores(

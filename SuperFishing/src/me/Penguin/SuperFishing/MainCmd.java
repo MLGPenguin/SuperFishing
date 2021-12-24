@@ -74,7 +74,7 @@ public class MainCmd implements TabExecutor {
 				return true;
 			}
 		} else if (cmmnd.getName().equalsIgnoreCase("fishingshop")) {
-			fishshop.open((Player) s);
+			new fishshop((Player) s).open();
 			return true;
 		} else if (cmmnd.getName().equalsIgnoreCase("fishtest")) {
 			if (s.hasPermission(perm.givecrate.get())) {
