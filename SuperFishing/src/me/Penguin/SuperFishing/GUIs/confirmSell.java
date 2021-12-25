@@ -26,23 +26,21 @@ public class confirmSell {
 	private Player p;
 	private int amountOfFish;
 	private double price;
-	private int amount;
 	private fishshop f;
 	
 	public confirmSell(fishshop f) {	
 		this.p = f.getPlayer();
-		this.amountOfFish = f.getTotalFishCount();
-		this.price = f.getWorth();
 		this.f = f;
 	}
 	
 	public void open(boolean all, FISH notAll) {
-		if (!all) amount = f.getAmount(notAll);
+		amountOfFish = all?f.getTotalFishCount():f.getAmount(notAll);
+		price = all ? f.getWorth() : notAll.getFish().getPrice() * amountOfFish;
 		Inventory inv = Bukkit.createInventory(null, 27, u.cc("&aConfirmation Required"));
 		ItemStack confirm = new MiniItemBuilder(Material.LIME_STAINED_GLASS_PANE).setName("&a&LCONFIRM").build();
 		ItemStack cancel = new MiniItemBuilder(Material.RED_STAINED_GLASS_PANE).setName("&c&LCANCEL").build();
 		ItemStack message = new MiniItemBuilder(all?Material.BLACK_STAINED_GLASS_PANE:notAll.getFish().getItem(false, null, 0).getType()).setName("&aConfirmation Required").addLores("&7Are you sure you want to sell",
-				"&6" + (all?amountOfFish:amount) + "&7 " + (all? "fish" : notAll.getFish().getName()) + "&7 for &a$" + u.dc((all?price:notAll.getFish().getPrice() * amount))).build();
+				"&6" + amountOfFish + "&7 " + (all? "fish" : notAll.getFish().getName()) + "&7 for &a$" + u.dc(price)).build();
 		
 		for (int i : confirms) inv.setItem(i, confirm);
 		for (int i : cancels) inv.setItem(i, cancel);
