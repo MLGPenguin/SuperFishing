@@ -199,7 +199,6 @@ public class MainListener implements Listener{
 							price += (f.getFish().getPrice() * x.getAmount());
 							amountFish += x.getAmount();
 							p.getInventory().remove(x);
-							break;
 						} else continue;
 					}
 				} catch (IllegalArgumentException e) {}

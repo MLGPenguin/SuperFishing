@@ -71,7 +71,7 @@ public class Fish {
 }
 	
 	public static List<Material> fishMaterials = Arrays.asList(Material.COD, Material.SALMON, Material.PUFFERFISH, Material.TROPICAL_FISH, Material.PRISMARINE_SHARD,
-															Material.PRISMARINE_CRYSTALS, Material.INK_SAC, Material.SCUTE, Material.TURTLE_EGG);
+															Material.PRISMARINE_CRYSTALS, Material.INK_SAC, Material.SCUTE, Material.NAUTILUS_SHELL, Material.TURTLE_EGG);
 	public enum FISH {		
 		cod0(new Fish(Material.COD, 0.2350430, Catch.BASIC, 300, true)),
 		cod1(new Fish(Material.COD, 0.03388462, Catch.RARE, 12500, true)),
