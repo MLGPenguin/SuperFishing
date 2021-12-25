@@ -115,7 +115,6 @@ public class MiniItemBuilder {
 			}
 		}
 		if (lore != null && lore.size() > 0) meta.setLore(lore);
-		
 		if (clearEnchants) {
 			for (Enchantment e : meta.getEnchants().keySet()) meta.removeEnchant(e);			
 		}
@@ -128,7 +127,6 @@ public class MiniItemBuilder {
 		if (name != null) meta.setDisplayName(u.hc(name));
 		if (hideEnchants) meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		if (locname != null) meta.setLocalizedName(locname);
-		
 		stack.setItemMeta(meta);
 		return stack;
 	}

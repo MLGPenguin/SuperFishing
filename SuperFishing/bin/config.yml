@@ -1,7 +1,7 @@
 FishingShopTitle: "&aFishing Shop"
 
 Regions:
-  1:
+  name:
     WorldUID:
     loc1:
       x:

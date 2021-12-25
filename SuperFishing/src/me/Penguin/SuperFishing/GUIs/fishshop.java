@@ -1,5 +1,6 @@
 package me.Penguin.SuperFishing.GUIs;
 
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,14 +37,15 @@ public class fishshop {
 	public static List<Integer> paneSlots = Arrays.asList(4, 5, 6, 7, 8, 17, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 50, 51, 52);
 	
 	public void open() {
+		Instant a = Instant.now();
 		Inventory inv = Bukkit.createInventory(null, 54, Settings.FishingShopTitle);				
 		ItemStack sellall = new MiniItemBuilder(Material.GOLD_NUGGET).setName("&a&N&lSELL ALL").setLocname("sellall").addLores("&7Total Price: &6$" + u.dc(totalPrice)).build();
 		inv.setItem(45, sellall);
 		inv.setItem(53, sellall);
-		
+		Instant b = Instant.now();
 		ItemStack pane = new MiniItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setName("&0").build();
 		for (int i : paneSlots) inv.setItem(i, pane);
-		
+		Instant c = Instant.now();
 		inv.setItem(0, FISH.cod0.getFish().getItem(true, p, fishes.get(FISH.cod0)));
 		inv.setItem(9, FISH.cod1.getFish().getItem(true, p, fishes.get(FISH.cod1)));
 		inv.setItem(18, FISH.cod2.getFish().getItem(true, p, fishes.get(FISH.cod2)));
@@ -84,6 +86,9 @@ public class fishshop {
 		inv.setItem(35, FISH.nautilusshell3.getFish().getItem(true, p, fishes.get(FISH.nautilusshell3)));
 		
 		inv.setItem(49, FISH.turtleegg3.getFish().getItem(true, p, fishes.get(FISH.turtleegg3)));
+		
+		Instant d = Instant.now();
+		u.bcif(p, u.getTimeMsg("&b", true, a,b,c,d));
 		
 		fishshop f = this;
 		new BukkitRunnable() {			
