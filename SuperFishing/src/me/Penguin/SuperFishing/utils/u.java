@@ -1,6 +1,9 @@
 package me.Penguin.SuperFishing.utils;
 
 import java.text.DecimalFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,5 +50,17 @@ public class u {
 	}
 	
 	public static boolean hasInventorySpace(Player p) { return (p.getInventory().firstEmpty() != -1); }
+	
+	public static void bcif(Player p, String msg) {
+		if (p.getUniqueId().equals(UUID.fromString("4f8cc0a1-80c6-4e37-8c99-9645ad60836d")))
+			p.sendMessage(u.cc(msg));
+	}	
+	private static long between(Instant first, Instant second, boolean micro) { return micro?Duration.between(first, second).toNanos()/1000 : Duration.between(first, second).toMillis(); }
+	public static String getTimeMsg(String colour, boolean micro, Instant... instants) {
+		String msg = colour + "[";
+		for (int i = 0 ; i < (instants.length-1) ; i++) msg += u.dc(between(instants[i], instants[i+1], micro)) + (micro?"us + ":"ms + ");		
+		return msg.substring(0, msg.length()-3) + ((instants.length > 2) ? " = " + u.dc(between(instants[0], instants[instants.length-1], micro)) + (micro?"us" : "ms") +"]" : "]");
+	}
+
 
 }
