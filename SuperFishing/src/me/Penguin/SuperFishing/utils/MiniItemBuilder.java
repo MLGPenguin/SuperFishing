@@ -99,6 +99,11 @@ public class MiniItemBuilder {
 		for (String x : lores) lore.add(u.hc(x));
 		return this;
 	}
+	public MiniItemBuilder addLores(boolean hex, String... lores) {
+		if (this.lore == null) lore = new ArrayList<>();
+		for (String x : lores) lore.add(hex?u.hc(x):u.cc(x));
+		return this;
+	}
 	
 	public MiniItemBuilder setLocname(String loc) {
 		this.locname = loc;
@@ -126,6 +131,14 @@ public class MiniItemBuilder {
 		}
 		if (name != null) meta.setDisplayName(u.hc(name));
 		if (hideEnchants) meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		if (locname != null) meta.setLocalizedName(locname);
+		stack.setItemMeta(meta);
+		return stack;
+	}
+	
+	public ItemStack buildFish() {
+		if (name != null) meta.setDisplayName(u.cc(name));
+		if (lore != null && lore.size()	> 0) meta.setLore(lore);
 		if (locname != null) meta.setLocalizedName(locname);
 		stack.setItemMeta(meta);
 		return stack;

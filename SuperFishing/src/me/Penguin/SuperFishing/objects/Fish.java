@@ -41,15 +41,15 @@ public class Fish {
 				.setName(getName())				
 				.setLocname(FISHname);
 		if (forShop) {			
-			return fish.addLores(
+			return fish.addLores(false,
 					"&7Catch Type: " + CatchType.getName(), 
 					"&7Sell Price: &a&n" + "$" + u.dc(price), "",
-					"&7You have: " + u.dc(amountInInventory)).build();
+					"&7You have: " + u.dc(amountInInventory)).buildFish();
 		} else {
-			return fish.addLores("",
+			return fish.addLores(false, "",
 					"&7Catch Type: " + CatchType.getName(), "",
 					"&7This fish can be sold to the ",
-					"&6Fish Merchant &7at spawn!").build();
+					"&6Fish Merchant &7at spawn!").buildFish();
 		}
 	}
 	
