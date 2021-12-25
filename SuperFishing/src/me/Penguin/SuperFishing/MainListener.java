@@ -1,5 +1,6 @@
 package me.Penguin.SuperFishing;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,6 @@ import me.Penguin.SuperFishing.GUIs.fishshop;
 import me.Penguin.SuperFishing.objects.Crate;
 import me.Penguin.SuperFishing.objects.Crate.CrateType;
 import me.Penguin.SuperFishing.objects.Fish;
-import me.Penguin.SuperFishing.objects.Fish.Catch;
 import me.Penguin.SuperFishing.objects.Fish.FISH;
 import me.Penguin.SuperFishing.objects.Key;
 import me.Penguin.SuperFishing.objects.Settings;
@@ -54,6 +54,7 @@ public class MainListener implements Listener{
 	@EventHandler
 	public void onFishing(PlayerFishEvent e) {		
 		if (e.getState() == State.CAUGHT_FISH) {
+			Instant start = Instant.now();
 			if (Settings.isFishable(e.getHook().getLocation())) {
 				Fish fish = chooseRandomFish();
 				ItemStack item = fish.getItem(false, null, 0);
@@ -76,10 +77,11 @@ public class MainListener implements Listener{
 				case LEGENDARY:
 					p.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 1, 1);
 					break;
-				default: break;
-					
+				default: break;					
 				}
-			}		
+				Instant end = Instant.now();
+				u.bcif(p, u.getTimeMsg("&b", true, start, end));
+			}
 		}
 	}
 
@@ -205,7 +207,7 @@ public class MainListener implements Listener{
 				} catch (IllegalArgumentException e) {}
 			}
 		}
-		p.sendMessage("sold " + amountFish + " fish for $" + u.dc(price) + "ish");
+		p.sendMessage(u.cc("&7You sold &6" + amountFish + " &7fish for &a$" + u.dc(price)));
 		eco.depositPlayer(p, price);
 		new fishshop(p).open();
 	}
