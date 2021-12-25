@@ -27,6 +27,8 @@ public class confirmSell {
 	private int amountOfFish;
 	private double price;
 	private fishshop f;
+	private boolean all;
+	private FISH fish;
 	
 	public confirmSell(fishshop f) {	
 		this.p = f.getPlayer();
@@ -34,6 +36,8 @@ public class confirmSell {
 	}
 	
 	public void open(boolean all, FISH notAll) {
+		this.all = all;
+		fish = notAll;
 		amountOfFish = all?f.getTotalFishCount():f.getAmount(notAll);
 		price = all ? f.getWorth() : notAll.getFish().getPrice() * amountOfFish;
 		Inventory inv = Bukkit.createInventory(null, 27, u.cc("&aConfirmation Required"));
@@ -55,6 +59,13 @@ public class confirmSell {
 		}.runTaskLater(Main.getPlugin(Main.class), 1);
 				
 	}
+	
+	public double getPrice() { return price; }
+	public boolean isAll() { return all; }
+	public FISH getFISH() { return fish; }
+	public int getFishAmount() { return amountOfFish; }
+	public Player getPlayer() { return p; }
+	
 	
 
 }

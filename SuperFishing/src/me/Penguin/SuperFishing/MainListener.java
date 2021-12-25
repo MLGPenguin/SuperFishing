@@ -2,10 +2,8 @@ package me.Penguin.SuperFishing;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -24,7 +22,6 @@ import org.bukkit.event.player.PlayerFishEvent.State;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import me.Penguin.MainUtil.u;
 import me.Penguin.SuperFishing.GUIs.confirmSell;
 import me.Penguin.SuperFishing.GUIs.fishshop;
 import me.Penguin.SuperFishing.objects.Crate;
@@ -33,6 +30,7 @@ import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Fish.Catch;
 import me.Penguin.SuperFishing.objects.Fish.FISH;
 import me.Penguin.SuperFishing.objects.Key;
+import me.Penguin.SuperFishing.utils.u;
 import net.milkbowl.vault.economy.Economy;
 
 public class MainListener implements Listener{
@@ -162,9 +160,10 @@ public class MainListener implements Listener{
 		}
 		if (confirming.containsKey(uuid)) {
 			if (e.getClickedInventory() == e.getView().getTopInventory()) {
+				confirmSell c = confirming.get(uuid);
 				if (confirmSell.cancels.contains(slot)) {
 					new fishshop(p).open();
-				}
+				} else if (confirmSell.confirms.contains(slot)) sell(c);
 			}
 			e.setCancelled(true);
 		}
@@ -179,8 +178,36 @@ public class MainListener implements Listener{
 			value -= list.get(i);
 			i++;
 		}
-		return chances.get(list.get(i-1));
-		
+		return chances.get(list.get(i-1));		
+	}
+	
+	private void sell(confirmSell c) {
+		double price = 0;
+		int amountFish = 0;
+		Player p = c.getPlayer();
+		for (ItemStack x : p.getInventory().getContents()) {
+			if (x != null && x.hasItemMeta() && x.getItemMeta().hasLocalizedName() && Fish.fishMaterials.contains(x.getType())) {
+				try {
+					FISH f = FISH.valueOf(x.getItemMeta().getLocalizedName());
+					if (c.isAll()) {
+						price += (f.getFish().getPrice() * x.getAmount());
+						amountFish += x.getAmount();
+						p.getInventory().remove(x);
+					}
+					else {
+						if (c.getFISH() == f) {
+							price += (f.getFish().getPrice() * x.getAmount());
+							amountFish += x.getAmount();
+							p.getInventory().remove(x);
+							break;
+						} else continue;
+					}
+				} catch (IllegalArgumentException e) {}
+			}
+		}
+		p.sendMessage("sold " + amountFish + " fish for $" + u.dc(price) + "ish");
+		eco.depositPlayer(p, price);
+		new fishshop(p).open();
 	}
 
 

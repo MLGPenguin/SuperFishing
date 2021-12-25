@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class u {
 	
@@ -44,5 +45,7 @@ public class u {
 		}
 		return returnable;
 	}
+	
+	public static boolean hasInventorySpace(Player p) { return (p.getInventory().firstEmpty() != -1); }
 
 }
