@@ -30,6 +30,8 @@ import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Fish.Catch;
 import me.Penguin.SuperFishing.objects.Fish.FISH;
 import me.Penguin.SuperFishing.objects.Key;
+import me.Penguin.SuperFishing.objects.Settings;
+import me.Penguin.SuperFishing.utils.m;
 import me.Penguin.SuperFishing.utils.u;
 import net.milkbowl.vault.economy.Economy;
 
@@ -52,36 +54,32 @@ public class MainListener implements Listener{
 	@EventHandler
 	public void onFishing(PlayerFishEvent e) {		
 		if (e.getState() == State.CAUGHT_FISH) {
-			Fish fish = chooseRandomFish();
-			ItemStack item = fish.getItem(false, null, 0);
-			Item caught = (Item) e.getCaught();
-			item.setAmount(1);
-			caught.setItemStack(item);
-			Player p = e.getPlayer();
-			switch (fish.getCatchType()) {
-			case BASIC: 
-				p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 1);
-				break;
-			case RARE:
-				p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
-				p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1, 1);
-				break;
-			case EXOTIC:
-				p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
-				p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
-				break;
-			case LEGENDARY:
-				p.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 1, 1);
-				break;
-			default: break;
-				
-			}
-			if (fish.getCatchType() == Catch.BASIC) p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 1);
-			else if (fish.getCatchType() == Catch.RARE) {
-				
-			} else if (fish.getCatchType() == Catch.EXOTIC) {
-				
-			}
+			if (Settings.isFishable(e.getHook().getLocation())) {
+				Fish fish = chooseRandomFish();
+				ItemStack item = fish.getItem(false, null, 0);
+				Item caught = (Item) e.getCaught();
+				item.setAmount(1);
+				caught.setItemStack(item);
+				Player p = e.getPlayer();
+				switch (fish.getCatchType()) {
+				case BASIC: 
+					p.playSound(p.getLocation(), Sound.BLOCK_BUBBLE_COLUMN_WHIRLPOOL_INSIDE, 1, 1);
+					break;
+				case RARE:
+					p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1, 1);
+					p.playSound(p.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_TWINKLE, 1, 1);
+					break;
+				case EXOTIC:
+					p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 1, 1);
+					p.playSound(p.getLocation(), Sound.BLOCK_BEACON_ACTIVATE, 1, 1);
+					break;
+				case LEGENDARY:
+					p.playSound(p.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 1, 1);
+					break;
+				default: break;
+					
+				}
+			}		
 		}
 	}
 
@@ -151,7 +149,10 @@ public class MainListener implements Listener{
 					ItemStack clicked = e.getCurrentItem();
 					String locname = clicked.getItemMeta().getLocalizedName();
 					if (locname.equals("sellall")) {
-						new confirmSell(f).open(true, null);
+						if (f.getTotalFishCount() == 0) {
+							p.sendMessage(m.nothingtoSell);
+							return;
+						} else new confirmSell(f).open(true, null);
 					} else {
 						new confirmSell(f).open(false, FISH.valueOf(locname));
 					}
