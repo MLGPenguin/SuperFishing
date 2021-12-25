@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import me.Penguin.SuperFishing.MainListener;
 import me.Penguin.SuperFishing.objects.Fish;
@@ -16,6 +17,7 @@ import me.Penguin.SuperFishing.objects.Settings;
 import me.Penguin.SuperFishing.objects.valueList;
 import me.Penguin.SuperFishing.utils.MiniItemBuilder;
 import me.Penguin.SuperFishing.utils.u;
+import penguin.supertags.Main;
 
 public class fishshop {
 	
@@ -83,8 +85,14 @@ public class fishshop {
 		
 		inv.setItem(49, FISH.turtleegg3.getFish().getItem(true, p, fishes.get(FISH.turtleegg3)));
 		
-		p.openInventory(inv);
-		MainListener.viewingFishShop.put(p.getUniqueId(), this);
+		fishshop f = this;
+		new BukkitRunnable() {			
+			@Override
+			public void run() {
+				p.openInventory(inv);
+				MainListener.viewingFishShop.put(p.getUniqueId(), f);
+			}
+		}.runTaskLater(Main.getPlugin(Main.class), 1);
 		
 	}
 	
@@ -119,6 +127,7 @@ public class fishshop {
 	public double getWorth() { return totalPrice; }
 	public int getTotalFishCount() { return totalFish; }
 	public Player getPlayer() { return p; }
+	public int getAmount(FISH fish) { return fishes.get(fish); }
 	
 	
 }
