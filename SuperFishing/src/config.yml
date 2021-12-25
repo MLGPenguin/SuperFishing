@@ -1,1 +1,14 @@
 FishingShopTitle: "&aFishing Shop"
+
+Regions:
+  1:
+    WorldUID:
+    loc1:
+      x:
+      y:
+      z:
+    loc2:
+      x:
+      y:
+      z:
+    

@@ -24,6 +24,8 @@ permissions:
    
   superfishing.givecrate:
     default: op
+  superfishing.admin:
+    default: op
     
 #  a.a:
  #   default: op

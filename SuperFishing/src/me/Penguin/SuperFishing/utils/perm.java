@@ -2,7 +2,7 @@ package me.Penguin.SuperFishing.utils;
 
 public enum perm {
 
-	givecrate("superfishing.givecrate");
+	admin("superfishing.admin");
 	
 	private String node;
 	
