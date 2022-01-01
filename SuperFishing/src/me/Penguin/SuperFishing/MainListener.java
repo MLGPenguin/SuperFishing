@@ -154,14 +154,17 @@ public class MainListener implements Listener{
 						if (f.getTotalFishCount() == 0) {
 							p.sendMessage(m.nothingtoSell);
 							return;
-						} else new confirmSell(f).open(true, null);
+						} else new confirmSell(f).open(true, null);						
 					} else {
-						new confirmSell(f).open(false, FISH.valueOf(locname));
+						FISH fsh = FISH.valueOf(locname);
+						if (f.getAmount(fsh) == 0) {
+							p.sendMessage(m.nothingtoSell);
+							return;
+						} else new confirmSell(f).open(false, FISH.valueOf(locname));
 					}
 				}
 			}
-		}
-		if (confirming.containsKey(uuid)) {
+		} else if (confirming.containsKey(uuid)) {
 			if (e.getClickedInventory() == e.getView().getTopInventory()) {
 				confirmSell c = confirming.get(uuid);
 				if (confirmSell.cancels.contains(slot)) {
@@ -207,7 +210,8 @@ public class MainListener implements Listener{
 				} catch (IllegalArgumentException e) {}
 			}
 		}
-		p.sendMessage(u.cc("&7You sold &6" + amountFish + " &7fish for &a$" + u.dc(price)));
+		p.playSound(p.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+		p.sendMessage(u.cc("&8[&7&LSB&6&LZEN&8] &7You sold &6" + amountFish + " &7fish for &a$" + u.dc(price)));
 		eco.depositPlayer(p, price);
 		new fishshop(p).open();
 	}

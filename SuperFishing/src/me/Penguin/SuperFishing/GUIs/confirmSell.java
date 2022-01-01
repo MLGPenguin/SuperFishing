@@ -57,7 +57,6 @@ public class confirmSell {
 				MainListener.confirming.put(p.getUniqueId(), c);
 			}
 		}.runTaskLater(Main.getPlugin(Main.class), 1);
-				
 	}
 	
 	public double getPrice() { return price; }
