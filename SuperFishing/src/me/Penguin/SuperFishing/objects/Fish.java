@@ -1,10 +1,8 @@
 package me.Penguin.SuperFishing.objects;
 
-import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -75,37 +73,37 @@ public class Fish {
 	public static List<Material> fishMaterials = Arrays.asList(Material.COD, Material.SALMON, Material.PUFFERFISH, Material.TROPICAL_FISH, Material.PRISMARINE_SHARD,
 															Material.PRISMARINE_CRYSTALS, Material.INK_SAC, Material.SCUTE, Material.NAUTILUS_SHELL, Material.TURTLE_EGG);
 	public enum FISH {		
-		cod0(new Fish(Material.COD, 0.2350430, Catch.BASIC, 300, true)),
-		cod1(new Fish(Material.COD, 0.03388462, Catch.RARE, 12500, true)),
-		cod2(new Fish(Material.COD, 0.0070513, Catch.EXOTIC, 225000, true)),
-		cod3(new Fish(Material.COD, 0.0007785, Catch.LEGENDARY, 3150000, true)),
-		salmon0(new Fish(Material.SALMON, 0.2115387, Catch.BASIC, 350, true)),
-		salmon1(new Fish(Material.SALMON, 0.0310257, Catch.RARE, 16500, true)),
-		salmon2(new Fish(Material.SALMON, 0.0063462, Catch.EXOTIC, 262500, true)),
-		salmon3(new Fish(Material.SALMON, 0.0006938, Catch.LEGENDARY, 3500000, true)),
-		pufferfish0(new Fish(Material.PUFFERFISH, 0.1692310, Catch.BASIC, 400, true)),
-		pufferfish1(new Fish(Material.PUFFERFISH, 0.0253846, Catch.RARE, 16500, true)),
-		pufferfish2(new Fish(Material.PUFFERFISH, 0.0059231, Catch.EXOTIC, 275000, true)),
-		pufferfish3(new Fish(Material.PUFFERFISH, 0.0006262, Catch.LEGENDARY, 3850000, true)),
-		tropicalfish0(new Fish(Material.TROPICAL_FISH, 0.1598293, Catch.BASIC, 450, true)),
-		tropicalfish1(new Fish(Material.TROPICAL_FISH, 0.0225641, Catch.RARE, 18000, true)),
-		tropicalfish2(new Fish(Material.TROPICAL_FISH, 0.0056410, Catch.EXOTIC, 300000, true)),
-		tropicalfish3(new Fish(Material.TROPICAL_FISH, 0.0005745, Catch.LEGENDARY, 4200000, true)),
-		prismarineshard1(new Fish(Material.PRISMARINE_SHARD, 0.0203077, Catch.RARE, 20000, false)),
-		prismarineshard2(new Fish(Material.PRISMARINE_SHARD, 0.0049359, Catch.EXOTIC, 340000, false)),
-		prismarineshard3(new Fish(Material.PRISMARINE_SHARD, 0.0005077, Catch.LEGENDARY, 4800000, false)),
-		prismarinecrystals1(new Fish(Material.PRISMARINE_CRYSTALS, 0.0180513, Catch.RARE, 22500, false)),
-		prismarinecrystals2(new Fish(Material.PRISMARINE_CRYSTALS, 0.0045128, Catch.EXOTIC, 375000, false)),
-		prismarinecrystals3(new Fish(Material.PRISMARINE_CRYSTALS, 0.0004231, Catch.LEGENDARY, 5750000, false)),
-		inksac1(new Fish(Material.INK_SAC, 0.0157949, Catch.RARE, 2700, false)),
-		inksac2(new Fish(Material.INK_SAC, 0.0038077, Catch.EXOTIC, 425000, false)),
-		inksac3(new Fish(Material.INK_SAC, 0.0003554, Catch.LEGENDARY, 6500000, false)),
-		scute1(new Fish(Material.SCUTE, 0.0112821, Catch.RARE, 37000, false)),
-		scute2(new Fish(Material.SCUTE, 0.0028205, Catch.EXOTIC, 550000, false)),
-		scute3(new Fish(Material.SCUTE, 0.0002877, Catch.LEGENDARY, 8000000, false)),
-		nautilusshell2(new Fish(Material.NAUTILUS_SHELL, 0.0007897, Catch.EXOTIC, 5000000, false)),
-		nautilusshell3(new Fish(Material.NAUTILUS_SHELL, 0.0000197, Catch.LEGENDARY, 85000000, false)),
-		turtleegg3(new Fish(Material.TURTLE_EGG, 0.0000056, Catch.LEGENDARY, 1000000000, false));
+		cod0(new Fish(Material.COD, 0.2911336, Catch.BASIC, 300, true)),
+		cod1(new Fish(Material.COD, 0.0069872, Catch.RARE, 12500, true)),
+		cod2(new Fish(Material.COD, 0.0003882, Catch.EXOTIC, 225000, true)),
+		cod3(new Fish(Material.COD, 0.0000312, Catch.LEGENDARY, 3150000, true)),
+		salmon0(new Fish(Material.SALMON, 0.2620203, Catch.BASIC, 350, true)),
+		salmon1(new Fish(Material.SALMON, 0.0064049, Catch.RARE, 16500, true)),
+		salmon2(new Fish(Material.SALMON, 0.0003494, Catch.EXOTIC, 262500, true)),
+		salmon3(new Fish(Material.SALMON, 0.0000279, Catch.LEGENDARY, 3500000, true)),
+		pufferfish0(new Fish(Material.PUFFERFISH, 0.2096162, Catch.BASIC, 400, true)),
+		pufferfish1(new Fish(Material.PUFFERFISH, 0.0052404, Catch.RARE, 16500, true)),
+		pufferfish2(new Fish(Material.PUFFERFISH, 0.0003261, Catch.EXOTIC, 275000, true)),
+		pufferfish3(new Fish(Material.PUFFERFISH, 0.0000251, Catch.LEGENDARY, 3850000, true)),
+		tropicalfish0(new Fish(Material.TROPICAL_FISH, 0.1979709, Catch.BASIC, 450, true)),
+		tropicalfish1(new Fish(Material.TROPICAL_FISH, 0.0046581, Catch.RARE, 18000, true)),
+		tropicalfish2(new Fish(Material.TROPICAL_FISH, 0.0003105, Catch.EXOTIC, 300000, true)),
+		tropicalfish3(new Fish(Material.TROPICAL_FISH, 0.0000231, Catch.LEGENDARY, 4200000, true)),
+		prismarineshard1(new Fish(Material.PRISMARINE_SHARD, 0.0041923, Catch.RARE, 20000, false)),
+		prismarineshard2(new Fish(Material.PRISMARINE_SHARD, 0.0002717, Catch.EXOTIC, 340000, false)),
+		prismarineshard3(new Fish(Material.PRISMARINE_SHARD, 0.0000204, Catch.LEGENDARY, 4800000, false)),
+		prismarinecrystals1(new Fish(Material.PRISMARINE_CRYSTALS, 0.0037265, Catch.RARE, 22500, false)),
+		prismarinecrystals2(new Fish(Material.PRISMARINE_CRYSTALS, 0.0002484, Catch.EXOTIC, 375000, false)),
+		prismarinecrystals3(new Fish(Material.PRISMARINE_CRYSTALS, 0.0000170, Catch.LEGENDARY, 5750000, false)),
+		inksac1(new Fish(Material.INK_SAC, 0.0032607, Catch.RARE, 27000, false)),
+		inksac2(new Fish(Material.INK_SAC, 0.0002096, Catch.EXOTIC, 425000, false)),
+		inksac3(new Fish(Material.INK_SAC, 0.0000143, Catch.LEGENDARY, 6500000, false)),
+		scute1(new Fish(Material.SCUTE, 0.0023291, Catch.RARE, 37000, false)),
+		scute2(new Fish(Material.SCUTE, 0.0001553, Catch.EXOTIC, 550000, false)),
+		scute3(new Fish(Material.SCUTE, 0.0000115, Catch.LEGENDARY, 8000000, false)),
+		nautilusshell2(new Fish(Material.NAUTILUS_SHELL, 0.0000279, Catch.EXOTIC, 5000000, false)),
+		nautilusshell3(new Fish(Material.NAUTILUS_SHELL, 0.0000016, Catch.LEGENDARY, 85000000, false)),
+		turtleegg3(new Fish(Material.TURTLE_EGG, 0.0000005, Catch.LEGENDARY, 1000000000, false));
 		
 		private Fish fish;
 		
