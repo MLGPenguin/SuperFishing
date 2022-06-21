@@ -3,10 +3,13 @@ package me.Penguin.SuperFishing.utils;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -37,6 +40,11 @@ public class u {
 	}
 	
 	public static String cc(String s) { return ChatColor.translateAlternateColorCodes('&', s);	}	
+	public static List<String> cList(List<String> list){
+		List<String> newlist = new ArrayList<>();
+		for (String s : list) newlist.add(u.cc(s));		
+		return newlist;
+	}
 	
 	public static String capitaliseFirstLetters(String s) {
 		String[] words = s.split(" ");
@@ -50,6 +58,37 @@ public class u {
 	}
 	
 	public static boolean hasInventorySpace(Player p) { return (p.getInventory().firstEmpty() != -1); }
+	public static boolean isPlayer(String s) { return Bukkit.getPlayer(s) != null; }
+	
+	public static boolean isInt(String a) {
+		try {
+			Integer.parseInt(a);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+	/**
+	 * @param commands a list of possible commands
+	 * @param Input the players input on the given argument
+	 * @return all items on the commands list that start with the given input, most often used for tab completing.
+	 */	
+	public static List<String> TabCompleter(String Input, List<String> commands) {
+		List<String> wordsThatStartWithArg = new ArrayList<>();
+		for (String x : commands) if (x.toLowerCase().startsWith(Input.toLowerCase())) wordsThatStartWithArg.add(x);
+		return wordsThatStartWithArg;	
+	}
+	
+	/**
+	 * @param input Input from the given argument
+	 * @param cmds All available commands
+	 * @return all items on the commands list that start with the given input, most often used for tab completing.
+	 */	
+	public static List<String> TabCompleter(String input, String... cmds) {
+		List<String> wordsThatStartWithArg = new ArrayList<>();
+		for (String x : cmds) if (x.toLowerCase().startsWith(input.toLowerCase())) wordsThatStartWithArg.add(x); 
+		return wordsThatStartWithArg;
+	}
 	
 	public static void bcif(Player p, String msg) {
 		if (p.getUniqueId().equals(UUID.fromString("4f8cc0a1-80c6-4e37-8c99-9645ad60836d")))

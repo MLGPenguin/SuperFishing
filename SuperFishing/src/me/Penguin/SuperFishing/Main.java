@@ -25,7 +25,7 @@ public class Main extends JavaPlugin {
 		Settings.setup();
 		m.setup();
 	
-		eco = getEconomy();
+	//	eco = getEconomy();
 		
 		for (FISH f : FISH.values()) chances.put(f.getFish().getChance(), f.getFish());
 		
@@ -42,7 +42,7 @@ public class Main extends JavaPlugin {
 	
 	public Economy getEconomy() {
 		if (!(setupEconomy())) {
-			System.out.println(ChatColor.RED + "Vault and Economy are required!");
+			getLogger().severe(ChatColor.RED + "Vault and Economy are required!");
 			Bukkit.getServer().getPluginManager().disablePlugin(this);
 		}	
 		return eco;

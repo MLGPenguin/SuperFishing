@@ -8,14 +8,12 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -25,11 +23,10 @@ import org.bukkit.inventory.ItemStack;
 
 import me.Penguin.SuperFishing.GUIs.confirmSell;
 import me.Penguin.SuperFishing.GUIs.fishshop;
-import me.Penguin.SuperFishing.objects.Crate;
-import me.Penguin.SuperFishing.objects.Crate.CrateType;
+import me.Penguin.SuperFishing.crates.Crates;
+import me.Penguin.SuperFishing.keys.keys;
 import me.Penguin.SuperFishing.objects.Fish;
 import me.Penguin.SuperFishing.objects.Fish.FISH;
-import me.Penguin.SuperFishing.objects.Key;
 import me.Penguin.SuperFishing.objects.Settings;
 import me.Penguin.SuperFishing.utils.m;
 import me.Penguin.SuperFishing.utils.u;
@@ -37,6 +34,7 @@ import net.milkbowl.vault.economy.Economy;
 
 public class MainListener implements Listener{
 
+	@SuppressWarnings("unused")
 	private Main plugin;
 	private Economy eco;
 	public static HashMap<UUID, fishshop> viewingFishShop = new HashMap<>();
@@ -47,9 +45,6 @@ public class MainListener implements Listener{
 		this.eco = plugin.eco;
 		Bukkit.getPluginManager().registerEvents(this, plugin);		
 	}
-
-
-	private void bc(String s) { Bukkit.getPlayer("MLGPenguin").sendMessage(u.hc(s)); }
 
 	@EventHandler
 	public void onFishing(PlayerFishEvent e) {		
@@ -87,12 +82,13 @@ public class MainListener implements Listener{
 
 	@EventHandler
 	public void onClickCrate(PlayerInteractEvent e) {
-		if (e.getAction() == Action.RIGHT_CLICK_AIR) {	
+		if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {	
 			Player p = e.getPlayer();
 			ItemStack held = p.getInventory().getItemInMainHand();
-			if (Crate.isCrate(held)) {
+			if (Crates.isCrate(held)) {
 				e.setCancelled(true);
-				CrateType type = Crate.getCrateType(held);
+				//CrateType type = Crates.getType(held);
+				/*
 				if (p.isSneaking()) {
 					while (held.getAmount() > 0) {
 						if (u.hasInventorySpace(p)) {
@@ -107,28 +103,16 @@ public class MainListener implements Listener{
 					Crate.openCrate(p, type, 1);
 					held.setAmount(held.getAmount()-1);
 				}
+				*/
 				p.getInventory().setItemInMainHand(held);				
-				p.sendMessage("received some rewards");
+				p.sendMessage("Congrats, this is a crate");
+			} else if (keys.isKey(held)) {
+				e.setCancelled(true);
+				p.sendMessage("Congrats, this is a key!");
 			}
 		}
 	}
 
-
-
-	@EventHandler
-	public void dontPlaceTheCrateorKeys(BlockPlaceEvent e) {
-		Material placed = e.getBlock().getType();
-		if (placed == Key.material || placed == Crate.material) {
-			ItemStack hand = e.getPlayer().getInventory().getItemInMainHand();
-			if (hand != null && hand.getItemMeta() != null && hand.getItemMeta().hasLocalizedName()) {
-				if (hand.getItemMeta().getLocalizedName() == Crate.locname) {					
-					e.setCancelled(true);
-					e.getPlayer().sendMessage("[fishing] You can't place that!");
-				}
-			}
-		}
-	}
-	
 	
 	@EventHandler
 	public void removeFromLists(InventoryCloseEvent e) {
